@@ -5,7 +5,7 @@
 <a href="https://gaussianspa.github.io/"><img src="https://img.shields.io/badge/Project-Page-048C3D"></a>
 <!-- <a href="https://github.com/gaussianspa/GaussianSpa"><img src="https://img.shields.io/github/stars/VITA-Group/LightGaussian"></a> -->
 </p>
-
+Please put dynamic badges using https://shields.io/badges
 ## Setup
 
 ## User Guide
