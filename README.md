@@ -7,6 +7,8 @@
 </p>
 Please put dynamic badges using https://shields.io/badges
 
+## The code will be released soon!
+
 ## Setup
 
 ## User Guide
