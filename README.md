@@ -6,3 +6,5 @@ Please put dynamic badges using https://shields.io/badges
 
 ## We are wrapping up the code. The code will be released in late Feb. 2025!
 
+# Update log
+**Feb:** Results evaluated by metrics.py across all scenes are available now.
