@@ -4,7 +4,6 @@
 </p>
 Please put dynamic badges using https://shields.io/badges
 
-## We are wrapping up the code. The code will be released in late Feb. 2025!
-
+## This work has been accepted by CVPR 2025. We are working on the camera-ready manuscript and wrapping up the code.
 # Update log
 **Feb:** Results evaluated by metrics.py across all scenes are available now.
