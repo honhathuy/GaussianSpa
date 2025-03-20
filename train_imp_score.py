@@ -211,10 +211,11 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
 
             if iteration == args.optimizing_spa_stop_iter:
                 imp_score = update_imp_score( scene, args, gaussians, pipe, background)
-                mask = np.zeros(imp_score.shape[0], dtype=bool)
-                threshold = int(opt.prune_ratio2 * imp_score.shape[0])
-                masked_indices = np.argsort(imp_score.cpu())[:threshold]
-                mask[masked_indices]=True
+                k_threshold = int((1-opt.prune_ratio2) * imp_score.shape[0])
+                _, indices = torch.topk(imp_score[:, 0], k=k_threshold, largest=True)
+                mask = torch.ones(imp_score.shape[0], dtype=bool)
+                mask[indices] = False
+                gaussians.prune_points(mask)
                 print("\nBefore sparsifyting pruning:",len(gaussians.get_opacity)) 
                 gaussians.prune_points(mask)
                 print("\nAfter sparsifying pruning",len(gaussians.get_opacity))

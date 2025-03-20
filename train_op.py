@@ -137,11 +137,11 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
                     optimizingSpa.update(imp_score=None, update_u=False)
                 else:
                     opacity = gaussians.get_opacity
-                    threshold = int(opt.prune_ratio2 * len(opacity))
-                    opacity_sort = torch.zeros(opacity.shape)
-                    opacity_sort, _ = torch.sort(opacity,0)
-                    opacity_threshold = opacity_sort[threshold-1]
-                    gaussians.densify_and_prune(opt.densify_grad_threshold, opacity_threshold, scene.cameras_extent, size_threshold)
+                    k_threshold = int((1-opt.prune_ratio2) * opacity.shape[0])
+                    _, indices = torch.topk(opacity[:, 0], k=k_threshold, largest=True)
+                    mask = torch.ones(opacity.shape[0], dtype=bool)
+                    mask[indices] = False
+                    gaussians.prune_points(mask)
             elif iteration % opt.optimizing_spa_interval == 0 and opt.optimizing_spa == True and (iteration > opt.optimizing_spa_start_iter and iteration <= opt.optimizing_spa_stop_iter):
                 optimizingSpa.update(imp_score=None)
             # Optimizer step
@@ -154,11 +154,11 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
             if (iteration == opt.optimizing_spa_stop_iter):
                 if  opt.optimizing_spa == True:
                     opacity = gaussians.get_opacity
-                    threshold = int(opt.prune_ratio2 * opacity.shape[0])
-                    opacity_sort = torch.zeros(opacity.shape)
-                    opacity_sort, _ = torch.sort(opacity,0)
-                    opacity_threshold = opacity_sort[threshold-1]
-                    mask = (opacity < opacity_threshold).squeeze()
+                    k_threshold = int((1-opt.prune_ratio2) * opacity.shape[0])
+                    _, indices = torch.topk(opacity[:, 0], k=k_threshold, largest=True)
+                    mask = torch.ones(opacity.shape[0], dtype=bool)
+                    mask[indices] = False
+                    gaussians.prune_points(mask)
                     print("\nbefore sparsifyting:",len(gaussians.get_opacity))
                     gaussians.prune_points(mask)
                     print("\nafter sparsifyting",len(gaussians.get_opacity))

@@ -226,11 +226,11 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
 
             if iteration == args.optimizing_spa_stop_iter:
                 opacity = gaussians.get_opacity
-                threshold = int(opt.prune_ratio2 * opacity.shape[0])
-                opacity_sort = torch.zeros(opacity.shape)
-                opacity_sort, _ = torch.sort(opacity,0)
-                opacity_threshold = opacity_sort[threshold-1]
-                mask = (opacity < opacity_threshold).squeeze()
+                k_threshold = int((1-opt.prune_ratio2) * opacity.shape[0])
+                _, indices = torch.topk(opacity[:, 0], k=k_threshold, largest=True)
+                mask = torch.ones(opacity.shape[0], dtype=bool)
+                mask[indices] = False
+                gaussians.prune_points(mask)
                 print("\nbefore sparsifyting:",gaussians.get_opacity.shape[0])
                 gaussians.prune_points(mask)
                 print("\nafter sparsifyting",gaussians.get_opacity.shape[0])
