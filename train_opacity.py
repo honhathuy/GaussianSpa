@@ -55,15 +55,6 @@ def init_cdf_mask(importance, thres=1.0):
         
     return non_prune_mask
 
-def set_seed(seed_value):
-    torch.manual_seed(seed_value)  # CPU
-    torch.cuda.manual_seed(seed_value)  # GPU
-    torch.cuda.manual_seed_all(seed_value)  # all GPUs
-    np.random.seed(seed_value)  # NumPy
-    #random.seed(seed_value)  # Python library
-    os.environ['PYTHONHASHSEED'] = str(seed_value)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
 
 def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoint_iterations, checkpoint, debug_from, args):
     first_iter = 0
@@ -353,8 +344,6 @@ def update_imp_score( scene, args, gaussians, pipe, background):
 if __name__ == "__main__":
     # Set up command line argument parser
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    #os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"  # specify which GPU(s) to be used
-    set_seed(628363)
     parser = ArgumentParser(description="Training script parameters")
     lp = ModelParams(parser)
     op = OptimizationParams(parser)

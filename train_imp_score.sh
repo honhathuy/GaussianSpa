@@ -41,39 +41,37 @@ run_script(){
     echo "New port number is $PORT"
   done
 
-    local DATASET_DIR=$1
-    local DATASET_NAME=$(basename "$DATASET_DIR")
-    
-        OUTPUT_DIR="./output/"$DATASET_NAME"/imp_score"
-        echo "Output script for $OUTPUT_DIR"
-        mkdir -p "$OUTPUT_DIR"
-        ckpt="$OUTPUT_DIR"/chkpnt"$chkpnt_iter".pth
-        SAMPLING_FACTOR=$(echo "0.80" | bc)
-        if [ -f "$OUTPUT_DIR/$OUTPUT_FILE" ]; then
-            echo "Output file $OUTPUT_FILE already exists. Skipping this iteration."
-            continue
-        fi
+  local DATASET_DIR=$1
+  local DATASET_NAME=$(basename "$DATASET_DIR")
+  
+  OUTPUT_DIR="./output/"$DATASET_NAME"/imp_score"
+  echo "Output script for $OUTPUT_DIR"
+  mkdir -p "$OUTPUT_DIR"
+  ckpt="$OUTPUT_DIR"/chkpnt"$chkpnt_iter".pth
+  SAMPLING_FACTOR=$(echo "0.80" | bc)
+  if [ -f "$OUTPUT_DIR/$OUTPUT_FILE" ]; then
+      echo "Output file $OUTPUT_FILE already exists. Skipping this iteration."
+      continue
+  fi
 
-        gpu_id=$(get_available_gpu)
-        if [[ -n $gpu_id ]]; then
-          echo "GPU $gpu_id is available."
-          CUDA_VISIBLE_DEVICES=$gpu_id python "$PYTHON_SCRIPT" \
-          --port "$PORT" \
-          -s="$DATASET_DIR" \
-          -m="$OUTPUT_DIR" \
-          --eval \
-          --prune_ratio1 "0.5"\
-          --prune_ratio2 "$SAMPLING_FACTOR"\
-          --imp_metric "indoor"\
-          --iterations "40000"
-          #--checkpoint_iterations 14999
-          #--start_checkpoint "$ckpt"
-          else
-            echo "No GPU available at the moment. Retrying in 1 minute."
-            sleep 60
-        fi
-        # Optional: Add a sleep interval if needed
-        sleep 1
+  gpu_id=$(get_available_gpu)
+  if [[ -n $gpu_id ]]; then
+    echo "GPU $gpu_id is available."
+    CUDA_VISIBLE_DEVICES=$gpu_id python "$PYTHON_SCRIPT" \
+    --port "$PORT" \
+    -s="$DATASET_DIR" \
+    -m="$OUTPUT_DIR" \
+    --eval \
+    --prune_ratio1 "0.5"\
+    --prune_ratio2 "$SAMPLING_FACTOR"\
+    --imp_metric "indoor"\
+    --iterations "40000"
+    #--checkpoint_iterations 14999
+    #--start_checkpoint "$ckpt"
+    else
+      echo "No GPU available at the moment. Retrying in 1 minute."
+      sleep 60
+  fi
 }
 
 for view in "${run_scenes[@]}"; do

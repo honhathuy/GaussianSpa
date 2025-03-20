@@ -41,30 +41,30 @@ run_script(){
     echo "New port number is $PORT"
   done
 
-    local DATASET_DIR=$1
-    local DATASET_NAME=$(basename "$DATASET_DIR")
-    OUTPUT_DIR="./output/"$DATASET_NAME"/opacity"
-    echo "Output script for $OUTPUT_DIR"
-    mkdir -p "$OUTPUT_DIR"
-    ckpt="$OUTPUT_DIR"/chkpnt"$chkpnt_iter".pth
-    SPA_RATIO=$(echo "0.80" | bc)
-    gpu_id=$(get_available_gpu)
+  local DATASET_DIR=$1
+  local DATASET_NAME=$(basename "$DATASET_DIR")
+  OUTPUT_DIR="./output/"$DATASET_NAME"/opacity"
+  echo "Output script for $OUTPUT_DIR"
+  mkdir -p "$OUTPUT_DIR"
+  ckpt="$OUTPUT_DIR"/chkpnt"$chkpnt_iter".pth
+  SPA_RATIO=$(echo "0.80" | bc)
+  gpu_id=$(get_available_gpu)
 
-    if [[ -n $gpu_id ]]; then
-      echo "GPU $gpu_id is available."
-      CUDA_VISIBLE_DEVICES=$gpu_id python "$PYTHON_SCRIPT" \
-      --port "$PORT" \
-      -s="$DATASET_DIR" \
-      -m="$OUTPUT_DIR" \
-      --eval \
-      --prune_ratio2 "$SPA_RATIO"\
-      --iterations "30000"
-      #--start_checkpoint "$ckpt"
-      #--checkpoint_iterations "$chkpnt_iter"
-      else
-        echo "No GPU available at the moment. Retrying in 1 minute."
-        sleep 60
-    fi
+  if [[ -n $gpu_id ]]; then
+    echo "GPU $gpu_id is available."
+    CUDA_VISIBLE_DEVICES=$gpu_id python "$PYTHON_SCRIPT" \
+    --port "$PORT" \
+    -s="$DATASET_DIR" \
+    -m="$OUTPUT_DIR" \
+    --eval \
+    --prune_ratio2 "$SPA_RATIO"\
+    --iterations "30000"
+    #--start_checkpoint "$ckpt"
+    #--checkpoint_iterations "$chkpnt_iter"
+    else
+      echo "No GPU available at the moment. Retrying in 1 minute."
+      sleep 60
+  fi
 }
 
 for view in "${run_scenes[@]}"; do

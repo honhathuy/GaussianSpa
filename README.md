@@ -116,9 +116,9 @@ Other arguments are similar to offical 3DGS and Mini-Splatting.
 </details>
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
-    <h2 class="title">Citation</h2>
+    <h1 class="title">Citation</h1>
     <h4>Consider citing our paper if you find its insights and contributions somewhat valuable.</p>
-    <pre><code>@misc{zhang2024gaussianspa,
+    <pre>@misc{zhang2024gaussianspa,
         title={GaussianSpa: An "Optimizing-Sparsifying" Simplification Framework for Compact and High-Quality 3D Gaussian Splatting}, 
         author={Yangming Zhang and Wenqi Jia and Wei Niu and Miao Yin},
         year={2024},
@@ -126,6 +126,6 @@ Other arguments are similar to offical 3DGS and Mini-Splatting.
         archivePrefix={arXiv},
         primaryClass={cs.CV},
         url={https://arxiv.org/abs/2411.06019}, 
-}</code></pre>
+}</pre>
   </div>
 </section>
