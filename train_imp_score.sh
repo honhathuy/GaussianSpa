@@ -44,11 +44,11 @@ run_script(){
   local DATASET_DIR=$1
   local DATASET_NAME=$(basename "$DATASET_DIR")
   
-  OUTPUT_DIR="./output/"$DATASET_NAME"/imp_score"
+  OUTPUT_DIR="./output/"$DATASET_NAME"/imp_score_57_50"
   echo "Output script for $OUTPUT_DIR"
   mkdir -p "$OUTPUT_DIR"
   ckpt="$OUTPUT_DIR"/chkpnt"$chkpnt_iter".pth
-  SAMPLING_FACTOR=$(echo "0.80" | bc)
+  SAMPLING_FACTOR=$(echo "0.50" | bc)
   if [ -f "$OUTPUT_DIR/$OUTPUT_FILE" ]; then
       echo "Output file $OUTPUT_FILE already exists. Skipping this iteration."
       continue
@@ -62,7 +62,7 @@ run_script(){
     -s="$DATASET_DIR" \
     -m="$OUTPUT_DIR" \
     --eval \
-    --prune_ratio1 "0.5"\
+    --prune_ratio1 "0.57"\
     --prune_ratio2 "$SAMPLING_FACTOR"\
     --imp_metric "indoor"\
     --iterations "40000"
