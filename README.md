@@ -22,8 +22,8 @@ git clone https://github.com/noodle-lab/GaussianSpa.git --recursive
 ```
 ## 2. Setup environment
 ```shell
-conda create -n gaussain_spa python=3.7
-conda activate gaussain_spa
+conda create -n gaussian_spa python=3.7
+conda activate gaussian_spa
 pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 -f https://download.pytorch.org/whl/torch_stable.html
 pip install -r requirements.txt
 ```
