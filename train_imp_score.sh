@@ -44,7 +44,7 @@ run_script(){
   local DATASET_DIR=$1
   local DATASET_NAME=$(basename "$DATASET_DIR")
   
-  OUTPUT_DIR="./output/"$DATASET_NAME"/imp_score_57_50"
+  OUTPUT_DIR="./output/"$DATASET_NAME"/imp_score"
   echo "Output script for $OUTPUT_DIR"
   mkdir -p "$OUTPUT_DIR"
   ckpt="$OUTPUT_DIR"/chkpnt"$chkpnt_iter".pth
