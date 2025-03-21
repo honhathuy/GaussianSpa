@@ -230,7 +230,6 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
                 _, indices = torch.topk(opacity[:, 0], k=k_threshold, largest=True)
                 mask = torch.ones(opacity.shape[0], dtype=bool)
                 mask[indices] = False
-                gaussians.prune_points(mask)
                 print("\nbefore sparsifyting:",gaussians.get_opacity.shape[0])
                 gaussians.prune_points(mask)
                 print("\nafter sparsifyting",gaussians.get_opacity.shape[0])

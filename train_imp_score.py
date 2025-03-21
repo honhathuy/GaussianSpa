@@ -215,9 +215,9 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
                 _, indices = torch.topk(imp_score, k=k_threshold, largest=True)
                 mask = torch.ones(imp_score.shape[0], dtype=bool)
                 mask[indices] = False
-                print("\nBefore sparsifyting pruning:",len(gaussians.get_opacity)) 
+                print("\nBefore sparsifyting pruning:",gaussians.get_opacity.shape[0]) 
                 gaussians.prune_points(mask)
-                print("\nAfter sparsifying pruning",len(gaussians.get_opacity))
+                print("\nAfter sparsifying pruning",gaussians.get_opacity.shape[0])
                 torch.cuda.empty_cache()     
 
             # Optimizer step
