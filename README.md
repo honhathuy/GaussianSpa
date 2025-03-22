@@ -70,11 +70,11 @@ Interval to perform the “sparsifying” step every fixed number of iterations
 </details>
 
 ```shell
-# Metric opacity
+# Metric opacity for Mini-Splatting
 chmod +x train_opacity.sh
 bash train_opacity.sh
 
-# Metric importance score
+# Metric importance score for Mini-Splatting
 chmod +x train_imp_score.sh
 bash train_imp_score.sh
 ```
@@ -93,7 +93,26 @@ Interval to perform the “sparsifying” step every fixed number of iterations
 
 Other arguments are similar to offical 3DGS and Mini-Splatting.
 
-
+<details>
+ <summary><span style="font-weight: bold;">Recommend Arguments Setting for Evaluation</span></summary>
+ 
+ |   Scenes  |   Method  | Pruning_ratio1 | Pruning_ratio2 |
+ |:---------:|:---------:|:--------------:|:--------------:|
+ | drjohnson | imp_score |       75       |       50       |
+ |  playroom |  opacity  |       50       |       77       |
+ |  bicycle  | imp_score |       50       |       72       |
+ |   bonsai  | imp_score |       50       |       80       |
+ |  counter  |  opacity  |       60       |       50       |
+ |  flowers  |  opacity  |       50       |       70       |
+ |   garden  | imp_score |       60       |       50       |
+ |  kitchen  |  opacity  |       40       |       80       |
+ |    room   |  opacity  |       50       |       80       |
+ |   stump   | imp_score |       65       |       70       |
+ |  treehill |  opacity  |       40       |       75       |
+ |   train   |  opacity  |       50       |       80       |
+ |   trunk   |  opacity  |       62       |       80       |
+ 
+ </details>
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">

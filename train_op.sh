@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to your Python script
-PYTHON_SCRIPT="./train_opacity.py"  
+PYTHON_SCRIPT="./train_op.py"  
 BASE_DATASET_DIR="../Dataset"
 chkpnt_iter=14999
 declare -a run_scenes=(
@@ -47,7 +47,7 @@ run_script(){
   echo "Output script for $OUTPUT_DIR"
   mkdir -p "$OUTPUT_DIR"
   ckpt="$OUTPUT_DIR"/chkpnt"$chkpnt_iter".pth
-  SPA_RATIO=$(echo "0.80" | bc)
+  SPA_RATIO=$(echo "0.85" | bc)
   gpu_id=$(get_available_gpu)
 
   if [[ -n $gpu_id ]]; then
