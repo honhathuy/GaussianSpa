@@ -29,7 +29,7 @@ class OptimizingSpa:
     def update(self, imp_score, update_u= True):
         if self.imp_score_flag == True:
             z = imp_score + self.u
-            self.z = torch.Tensor(self.prune_z_metrics_imp_score(z,imp_score)).to(self.device)
+            self.z = torch.Tensor(self.prune_z(z)).to(self.device)
             if update_u:
                 with torch.no_grad():
                     diff =  imp_score - self.z
