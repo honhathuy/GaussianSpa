@@ -19,28 +19,19 @@ class OptimizingSpa:
         self.u = {}
         self.z = {}
         opacity = self.gaussians.get_opacity
-        if self.imp_score_flag==True:
-            self.u = torch.zeros(imp_score.shape).to(device)
-            self.z = torch.Tensor(imp_score.data.cpu().clone().detach()).to(device)
-        else:
-            self.u = torch.zeros(opacity.shape).to(device)
-            self.z = torch.Tensor(opacity.data.cpu().clone().detach()).to(device)
+        self.u = torch.zeros(opacity.shape).to(device)
+        self.z = torch.Tensor(opacity.data.cpu().clone().detach()).to(device)
 
     def update(self, imp_score, update_u= True):
+        z = self.gaussians.get_opacity + self.u
         if self.imp_score_flag == True:
-            z = imp_score + self.u
-            self.z = torch.Tensor(self.prune_z(z)).to(self.device)
-            if update_u:
-                with torch.no_grad():
-                    diff =  imp_score - self.z
-                    self.u += diff
+            self.z = torch.Tensor(self.prune_z_metrics_imp_score(z,imp_score)).to(self.device)
         else:
-            z = self.gaussians.get_opacity + self.u
             self.z = torch.Tensor(self.prune_z(z)).to(self.device)
-            if update_u:
-                with torch.no_grad():
-                    diff =  self.gaussians.get_opacity - self.z
-                    self.u += diff
+        if update_u:
+            with torch.no_grad():
+                diff =  self.gaussians.get_opacity  - self.z
+                self.u += diff
                     
     def prune_z(self, z):
         index = int(self.prune_ratio * len(z))
@@ -51,10 +42,8 @@ class OptimizingSpa:
         z_update= ((z > z_threshold) * z)  
         return z_update
 
-    def append_spa_loss(self, loss, imp_score):
+    def append_spa_loss(self, loss):
         if self.imp_score_flag==True:
-            loss += 0.5 * self.init_rho * (torch.norm(imp_score - self.z + self.u, p=2)) ** 2 
-        else:
             loss += 0.5 * self.init_rho * (torch.norm(self.gaussians.get_opacity - self.z + self.u, p=2)) ** 2
         return loss
 

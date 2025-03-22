@@ -111,7 +111,7 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
         Llag = loss
         if opt.optimizing_spa == True and iteration > opt.optimizing_spa_start_iter and iteration % opt.optimizing_spa_interval == 0 and iteration < opt.optimizing_spa_stop_iter:
             temp = loss 
-            loss = optimizingSpa.append_spa_loss(loss,imp_score)
+            loss = optimizingSpa.append_spa_loss(loss)
             Llag = temp - loss
         loss.backward()
         iter_end.record()
