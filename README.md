@@ -1,4 +1,4 @@
-# GaussianSpa: An “Optimizing-Sparsifying” Simplification Framework for Compact and High-Quality 3D Gaussian Splatting(CVPR 2025)
+# GaussianSpa: An “Optimizing-Sparsifying” Simplification Framework for Compact and High-Quality 3D Gaussian Splatting (CVPR 2025)
 <p align="center">
 Yangming Zhang*, Wenqi Jia*, Wei Niu, Miao Yin
 </p>
