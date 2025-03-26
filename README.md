@@ -6,7 +6,7 @@ Yangming Zhang*, Wenqi Jia*, Wei Niu, Miao Yin
 <a href="https://noodle-lab.github.io/gaussianspa"><img src="https://img.shields.io/badge/Project-Page-048C3D"></a>
 <a href="https://arxiv.org/pdf/2411.06019"><img src="https://img.shields.io/badge/Arxiv-Page-FF0000"></a>
 </p>
-TLDR: GaussianSpa formulates simplification as an optimization problem and introduces an “optimizing-sparsifying” solution that alternately solves two independent sub-problems, gradually imposing strong sparsity onto the Gaussians in the training process, significantly reduces the number of Gaussians while maintaining high rendering quality.
+GaussianSpa formulates simplification as an optimization problem and introduces an “optimizing-sparsifying” solution that alternately solves two independent sub-problems, gradually imposing strong sparsity onto the Gaussians in the training process, significantly reduces the number of Gaussians while maintaining high rendering quality.
 
 # Update log
 **Feb 2025:** Results evaluated by metrics.py across all scenes are available now.
