@@ -5,7 +5,7 @@ PYTHON_SCRIPT="./train_op.py"
 BASE_DATASET_DIR="../Dataset"
 chkpnt_iter=14999
 declare -a run_scenes=(
-  "bicycle"
+  # "bicycle"
   # "bonsai"
   # "counter"
   # "kitchen"

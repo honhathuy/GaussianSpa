@@ -173,8 +173,7 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
                     viewpoint_stack = scene.getTrainCameras().copy()
             elif iteration == opt.optimizing_spa_start_iter and opt.optimizing_spa == True:
                 imp_score = update_imp_score( scene, args, gaussians, pipe, background)
-    
-                optimizingSpa = OptimizingSpa(gaussians, imp_score, opt, device,imp_score_flag=True)
+                optimizingSpa = OptimizingSpa(gaussians, opt, device,imp_score_flag=True)
                 optimizingSpa.update(imp_score, update_u=False)
             elif iteration % opt.optimizing_spa_interval == 0 and opt.optimizing_spa == True and (iteration > opt.optimizing_spa_start_iter and iteration <= opt.optimizing_spa_stop_iter):
                 imp_score = update_imp_score( scene, args, gaussians, pipe, background)

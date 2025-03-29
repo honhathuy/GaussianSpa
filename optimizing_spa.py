@@ -10,7 +10,7 @@ import os
 
 
 class OptimizingSpa:
-    def __init__(self, gaussians, imp_score, opt, device,imp_score_flag = False):
+    def __init__(self, gaussians, opt, device,imp_score_flag = False):
         self.gaussians = gaussians
         self.device = device
         self.imp_score_flag=imp_score_flag
@@ -43,13 +43,13 @@ class OptimizingSpa:
         return z_update
 
     def append_spa_loss(self, loss):
-        if self.imp_score_flag==True:
-            loss += 0.5 * self.init_rho * (torch.norm(self.gaussians.get_opacity - self.z + self.u, p=2)) ** 2
+        loss += 0.5 * self.init_rho * (torch.norm(self.gaussians.get_opacity - self.z + self.u, p=2)) ** 2
         return loss
 
     def adjust_rho(self, iteration, iterations, factor=5):
         if iteration > int(0.85 * iterations):
             self.rho = factor * self.init_rho
+            
     def prune_z_metrics_imp_score(self, z, imp_score):
         index = int(self.prune_ratio * len(z))
         imp_score_sort = {}

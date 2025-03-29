@@ -100,7 +100,7 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
         Llag = loss
         if opt.optimizing_spa == True and iteration > opt.optimizing_spa_start_iter and iteration % opt.optimizing_spa_interval == 0 and iteration <= opt.optimizing_spa_stop_iter:
             temp = loss 
-            loss = optimizingSpa.append_spa_loss(loss, imp_score=None)
+            loss = optimizingSpa.append_spa_loss(loss)
             Llag = temp - loss
         loss.backward()
         iter_end.record()
@@ -133,7 +133,7 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
                     gaussians.reset_opacity()
             elif iteration == opt.optimizing_spa_start_iter:
                 if opt.optimizing_spa == True:
-                    optimizingSpa = OptimizingSpa(gaussians, imp_score=None, opt=opt, device=device)
+                    optimizingSpa = OptimizingSpa(gaussians, opt=opt, device=device)
                     optimizingSpa.update(imp_score=None, update_u=False)
                 else:
                     opacity = gaussians.get_opacity

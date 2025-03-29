@@ -127,7 +127,7 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
         Llag = loss
         if opt.optimizing_spa == True and iteration > opt.optimizing_spa_start_iter and iteration % opt.optimizing_spa_interval == 0 and iteration <= opt.optimizing_spa_stop_iter:
             temp = loss 
-            loss = optimizingSpa.append_spa_loss(loss, imp_score)
+            loss = optimizingSpa.append_spa_loss(loss)
             Llag = temp - loss
         loss.backward()
         iter_end.record()
@@ -189,9 +189,8 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
                     torch.cuda.empty_cache()
                     viewpoint_stack = scene.getTrainCameras().copy()
             elif iteration == opt.optimizing_spa_start_iter and opt.optimizing_spa == True:
-                optimizingSpa = OptimizingSpa(gaussians, imp_score, opt, device)
+                optimizingSpa = OptimizingSpa(gaussians, opt, device)
                 optimizingSpa.update(imp_score, update_u=False)
-                print("\nOriginal gaussian numbers are ",len(gaussians.get_opacity))
             elif iteration % opt.optimizing_spa_interval == 0 and opt.optimizing_spa == True and (iteration > opt.optimizing_spa_start_iter and iteration <= opt.optimizing_spa_stop_iter):
                 optimizingSpa.update(imp_score)
 
