@@ -6,15 +6,15 @@ BASE_DATASET_DIR="../Dataset"
 chkpnt_iter=14999
 declare -a run_scenes=(
    "bicycle"
-   "bonsai"
+  # "bonsai"
   # "counter"
   # "kitchen"
   # "room"
-   "stump"
-   "garden"
+  #"stump"
+  # "garden"
   # "train"
   # "truck"
-   "treehill"
+  # "treehill"
   # "playroom"
   # "drjohnson"
 )
@@ -48,7 +48,7 @@ run_script(){
   echo "Output script for $OUTPUT_DIR"
   mkdir -p "$OUTPUT_DIR"
   ckpt="$OUTPUT_DIR"/chkpnt"$chkpnt_iter".pth
-  SAMPLING_FACTOR=$(echo "0.80" | bc)
+  SPA_RATIO=$(echo "0.70" | bc)
   if [ -f "$OUTPUT_DIR/$OUTPUT_FILE" ]; then
       echo "Output file $OUTPUT_FILE already exists. Skipping this iteration."
       continue
@@ -63,7 +63,7 @@ run_script(){
     -m="$OUTPUT_DIR" \
     --eval \
     --prune_ratio1 "0.5"\
-    --prune_ratio2 "$SAMPLING_FACTOR"\
+    --prune_ratio2 "$SPA_RATIO"\
     --imp_metric "indoor"\
     --iterations "40000"
     #--checkpoint_iterations 14999

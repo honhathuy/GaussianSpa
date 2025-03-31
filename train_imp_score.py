@@ -186,12 +186,11 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
                 prob = prob.cpu().numpy()
 
 
-                factor = 1 - opt.prune_ratio1
                 N_xyz = gaussians._xyz.shape[0]
-                num_sampled=int(N_xyz*factor)
+                num_sampled=int(N_xyz*(1-opt.prune_ratio1))
             
                 indices = np.random.choice(N_xyz, size=num_sampled, 
-                                           p=prob, replace=False)
+                                             p=prob, replace=False)
     
                 mask = np.zeros(N_xyz, dtype=bool)
                 mask[indices] = True
@@ -209,6 +208,7 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
 
 
             if iteration == args.optimizing_spa_stop_iter:
+                imp_score = update_imp_score( scene, args, gaussians, pipe, background)
                 mask = np.zeros(imp_score.shape[0], dtype=bool)
                 threshold = int(opt.prune_ratio2 * imp_score.shape[0])
                 imp_score_sort = torch.zeros(imp_score.shape)
